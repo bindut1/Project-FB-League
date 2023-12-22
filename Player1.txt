@@ -1,0 +1,11 @@
+ID        Ten cau thu              Ngay sinh        Dia chi        Tuoi           So ao          The vang       The do         Ban thang      Ten doi bong      
+1,        Truong Cong Bao,         12/02/2004,      Hue,           19,            1,             0,             0,             0,             Viet Nam       
+2,        Nguyen Chung,            13/06/2005,      Hoa Cam,       18,            2,             0,             0,             0,             Viet Nam       
+3,        Ngo Van Danh,            12/01/2004,      Phu Ninh,      19,            3,             0,             0,             0,             Indonesia      
+4,        Vo Dinh Hai,             13/04/2004,      Lien Chieu,    19,            4,             0,             0,             0,             Indonesia      
+5,        Dang Phuc Long,          15/06/2004,      Hue,           19,            5,             0,             0,             0,             Lao            
+6,        Thai Viet Hung,          03/05/2005,      Hue,           18,            6,             0,             0,             0,             Lao            
+7,        Tran Vu Lam,             26/12/2004,      Que Son,       18,            7,             0,             0,             0,             Trung Quoc     
+8,        Le Nhat Minh,            12/12/2002,      Hue,           20,            8,             0,             0,             0,             Trung Quoc     
+9,        Le Anh Ngu,              14/05/2006,      Nui Thanh,     17,            9,             0,             0,             0,             Han Quoc       
+10,       Cao Thu Nga,             14/09/2004,      Dien Ban,      19,            10,            0,             0,             0,             Han Quoc         

@@ -37,4 +37,5 @@ public:
     static bool checkHistoryMatchExist(String, String, String);
     static void resetPointOfTeamAndDelelteHistoryMatch(String, String, String);
     static void resetGoalOfPlayerAndDeleteSavePlayer(String, String, String);
+    static void changeFile();
 };

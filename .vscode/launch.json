@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/UpdatePBL/PULL6/PULL1",
-      "program": "d:/UpdatePBL/PULL6/PULL1/build/Debug/outDebug",
+      "cwd": "d:/UpdatePBL/PULL8/Project-FB-League",
+      "program": "d:/UpdatePBL/PULL8/Project-FB-League/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

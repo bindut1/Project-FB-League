@@ -50,10 +50,13 @@ void Coach::enterInforCoach()
     String id, name, date, address;
     cout << "Enter citizen identification card: ";
     String::getline(cin, id);
+    if(id.size() == 0)  return;  
     cout << "Enter the name: ";
     String::getline(cin, name);
+    if(name.size() == 0)  return;  
     cout << "Enter the date (dd/mm/yyyy): ";
     String::getline(cin, date);
+    if(date.size() == 0)  return;  
     if (date[1] == '/')
     {
         String tmp("0");
@@ -63,6 +66,7 @@ void Coach::enterInforCoach()
         date.insert(3, "0");
     cout << "Enter the address: ";
     String::getline(cin, address);
+    if(address.size() == 0)  return;  
     this->setId(id);
     this->setName(String::standadizeString(name));
     this->setDateOfBirth(date);
@@ -668,6 +672,9 @@ void Coach::addCoachFromFile()
         char filename[256];
         cout << "Enter the file name containing the coachs: ";
         cin.getline(filename, 256);
+        if(filename[0] == '\0') {
+         return;
+        }
         ifstream i(filename);
         if (i.is_open())
         {

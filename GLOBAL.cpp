@@ -74,8 +74,16 @@ int main()
 		printCentered(drawOption("0. EXIT.", 50));
 		printCentered(drawBorder(50));
 		printCentered("Please enter your choice: ", 0);
-		cin >> lc;
-		cin.ignore();
+		String checklc;
+		String::getline(cin, checklc);
+		if (String::is_digit(checklc))
+		{
+			lc = String::toint(checklc);
+		}
+		else
+		{
+			continue;
+		}
 		if (lc == 1)
 		{
 			int lc1;
@@ -90,8 +98,16 @@ int main()
 				printCentered(drawOption("0. Back.", 50));
 				printCentered(drawBorder(50));
 				printCentered("Please enter your choice: ", 0);
-				cin >> lc1;
-				cin.ignore();
+				String checklc;
+				String::getline(cin, checklc);
+				if (String::is_digit(checklc))
+				{
+					lc1 = String::toint(checklc);
+				}
+				else
+				{
+					continue;
+				}
 				if (lc1 == 1)
 				{
 					int lc11;
@@ -106,13 +122,20 @@ int main()
 						printCentered(drawOption("0. Back.", 50));
 						printCentered(drawBorder(50));
 						printCentered("Please enter your choice: ", 0);
-						cin >> lc11;
-						cin.ignore();
+						String checklc;
+						String::getline(cin, checklc);
+						if (String::is_digit(checklc))
+						{
+							lc11 = String::toint(checklc);
+						}
+						else
+						{
+							continue;
+						}
 						if (lc11 == 1)
 						{
 							Team t;
 							t.createNewFootballTeam();
-							cout << "Successfully added a new team!" << endl;
 							cout << "Press the Enter key to continue . .";
 							getchar();
 						}
@@ -125,7 +148,7 @@ int main()
 							c.addCoachFromFile();
 							p.addPlayerFromFile();
 							t.addTeamFromFile();
-							cout << "Successfully added a new team!" << endl;
+							
 							cout << "Press the Enter key to continue . .";
 							getchar();
 						}
@@ -187,8 +210,16 @@ int main()
 					printCentered(drawOption("0. Back.", 70));
 					printCentered(drawBorder(70));
 					printCentered("Please enter your choice: ", 0);
-					cin >> lc2;
-					cin.ignore();
+					String checklc;
+					String::getline(cin, checklc);
+					if (String::is_digit(checklc))
+					{
+						lc2 = String::toint(checklc);
+					}
+					else
+					{
+						continue;
+					}
 					if (lc2 == 1)
 					{
 						int lc21;
@@ -204,8 +235,16 @@ int main()
 							printCentered(drawOption("0. Back.", 50));
 							printCentered(drawBorder(50));
 							printCentered("Please enter your choice: ", 0);
-							cin >> lc21;
-							cin.ignore();
+							String checklc;
+							String::getline(cin, checklc);
+							if (String::is_digit(checklc))
+							{
+								lc21 = String::toint(checklc);
+							}
+							else
+							{
+								continue;
+							}
 							if (lc21 == 1)
 							{
 								system("cls");
@@ -227,8 +266,15 @@ int main()
 									printCentered(drawOption("0. Back.", 50));
 									printCentered(drawBorder(50));
 									printCentered("Please enter your choice: ", 0);
-									cin >> lc212;
-									cin.ignore();
+									String::getline(cin, checklc);
+									if (String::is_digit(checklc))
+									{
+										lc212 = String::toint(checklc);
+									}
+									else
+									{
+										continue;
+									}
 									Team t;
 									if (lc212 == 1)
 									{
@@ -259,8 +305,15 @@ int main()
 									printCentered(drawOption("0. Back.", 50));
 									printCentered(drawBorder(50));
 									printCentered("Please enter your choice: ", 0);
-									cin >> lc213;
-									cin.ignore();
+									String::getline(cin, checklc);
+									if (String::is_digit(checklc))
+									{
+										lc213 = String::toint(checklc);
+									}
+									else
+									{
+										continue;
+									}
 									Team t;
 									if (lc213 == 1)
 									{
@@ -296,8 +349,15 @@ int main()
 							printCentered(drawOption("0. Back.", 50));
 							printCentered(drawBorder(50));
 							printCentered("Please enter your choice: ", 0);
-							cin >> lc22;
-							cin.ignore();
+							String::getline(cin, checklc);
+							if (String::is_digit(checklc))
+							{
+								lc22 = String::toint(checklc);
+							}
+							else
+							{
+								continue;
+							}
 							if (lc22 == 1)
 							{
 								int lc221;
@@ -312,8 +372,15 @@ int main()
 									printCentered(drawOption("0. Back.", 50));
 									printCentered(drawBorder(50));
 									printCentered("Please enter your choice: ", 0);
-									cin >> lc221;
-									cin.ignore();
+									String::getline(cin, checklc);
+									if (String::is_digit(checklc))
+									{
+										lc221 = String::toint(checklc);
+									}
+									else
+									{
+										continue;
+									}
 									Team t;
 									if (lc221 == 1)
 									{
@@ -346,7 +413,8 @@ int main()
 								{
 									t.deleteTeamById();
 									SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
-									cout << endl << "Please schedule matches again!" << endl;
+									cout << endl
+										 << "Please schedule matches again!" << endl;
 									SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 									if (countLines(filename1) <= 1)
 									{
@@ -409,8 +477,15 @@ int main()
 								printCentered(drawOption("0. Back.", 60));
 								printCentered(drawBorder(60));
 								printCentered("Please enter your choice: ", 0);
-								cin >> lc23;
-								cin.ignore();
+								String::getline(cin, checklc);
+								if (String::is_digit(checklc))
+								{
+									lc23 = String::toint(checklc);
+								}
+								else
+								{
+									continue;
+								}
 								if (lc23 == 1)
 								{
 									m.findMatchByIdTeam();
@@ -460,8 +535,15 @@ int main()
 								printCentered(drawOption("0. Back.", 50));
 								printCentered(drawBorder(50));
 								printCentered("Please enter your choice: ", 0);
-								cin >> lc24;
-								cin.ignore();
+								String::getline(cin, checklc);
+								if (String::is_digit(checklc))
+								{
+									lc24 = String::toint(checklc);
+								}
+								else
+								{
+									continue;
+								}
 								if (lc24 == 1)
 								{
 									Match m;
@@ -510,8 +592,15 @@ int main()
 									printCentered(drawOption("0. Back.", 70));
 									printCentered(drawBorder(70));
 									printCentered("Please enter your choice: ", 0);
-									cin >> lc25;
-									cin.ignore();
+									String::getline(cin, checklc);
+									if (String::is_digit(checklc))
+									{
+										lc25 = String::toint(checklc);
+									}
+									else
+									{
+										continue;
+									}
 									if (lc25 == 1)
 									{
 										system("cls");
@@ -675,8 +764,15 @@ int main()
 								printCentered(drawOption("0. Back.", 70));
 								printCentered(drawBorder(70));
 								printCentered("Please enter your choice: ", 0);
-								cin >> lc27;
-								cin.ignore();
+								String::getline(cin, checklc);
+								if (String::is_digit(checklc))
+								{
+									lc27 = String::toint(checklc);
+								}
+								else
+								{
+									continue;
+								}
 								if (lc27 == 1)
 								{
 									system("cls");

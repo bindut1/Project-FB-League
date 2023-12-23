@@ -183,19 +183,19 @@ void Team::showALLInforOfTeam()
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
     printCentered(drawBorder(202));
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
-    cout << "Rank: ";
+    cout << "Rank:           ";
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     cout << this->rank << endl;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
-    cout << "Point: ";
+    cout << "Point:          ";
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     cout << this->point << endl;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
-    cout << "Difference: ";
+    cout << "Difference:     ";
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     cout << this->difference << endl;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
-    cout << "NumberGoal: ";
+    cout << "NumberGoal:     ";
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     cout << this->numberGoal << endl;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
@@ -592,6 +592,7 @@ void Team::createNewFootballTeam()
          << endl;
     cout << "Enter the team name: ";
     String::getline(cin, nameFootballTeam);
+    if(nameFootballTeam.size() == 0)  return;    
     nameFootballTeam = String::standadizeString(nameFootballTeam);
     this->setNameFootballTeam(nameFootballTeam);
     int lc;
@@ -640,6 +641,7 @@ void Team::createNewFootballTeam()
                 // this->setIdTeam(this->getSizeTeamFromFile());
                 ofstream o("Team.txt", ios::app);
                 this->saveTeamToFile(o);
+                cout << "Successfully added a new team!" << endl;
                 break;
             }
         }
@@ -1976,6 +1978,11 @@ void Team::addTeamFromFile()
     {
         cout << "Enter the file name containing the teams: ";
         cin.getline(filename, 256);
+        if(filename[0] == '\0') {
+         return;
+        }
+        
+            
         ifstream i(filename);
         if (i.is_open())
         {
@@ -2042,6 +2049,7 @@ void Team::addTeamFromFile()
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
         }
     }
+    cout << "Successfully added a new team!" << endl;
 }
 
 void Team::increaseNumberOfTeam(String tt, int ofset)

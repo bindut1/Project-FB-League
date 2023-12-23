@@ -85,6 +85,7 @@ void HistoryMatch::showHistoryMatch()
         printCentered(drawBorder(60));
         cout << endl;
     }
+    file.close();
 }
 
 void HistoryMatch::saveHistoryMatchToFile(ofstream &o)
@@ -1418,7 +1419,7 @@ void HistoryMatch::updateHistoryMatch1()
 void HistoryMatch::resetPointOfTeamAndDelelteHistoryMatch(String idRound, String idTeam1, String idTeam2)
 {
     ifstream file("HistoryMatch.txt");
-    ofstream o("Tmp1.txt");
+    ofstream o("Tmp3.txt");
     String tmp;
     String::getline(file, tmp);
     o << left << setw(15) << "Vong" << setw(20) << "ID Doi thu nhat" << setw(20) << "Ban thang doi 1" << setw(20) << "ID Doi thu hai" << setw(20) << "Ban thang doi 2" << setw(20) << "Thoi gian" << setw(25) << "Ngay thang nam" << setw(20) << "Dia diem";
@@ -1468,21 +1469,19 @@ void HistoryMatch::resetPointOfTeamAndDelelteHistoryMatch(String idRound, String
             Team t;
             t.resetInforOfTeam(id1, String::toint(goal1), String::toint(goal2));
             t.resetInforOfTeam(id2, String::toint(goal2), String::toint(goal1));
+            // cout << endl << left << setw(15) << idr + "," << setw(20) << id1 + "," << setw(20) << goal1 + "," << setw(20) << id2 + "," << setw(20) << goal2 + "," << setw(20) << time + "," << setw(25) << date + "," << setw(20) << address;
         }
         else
         {
+            // cout << "Ko vo duoc";
             o << endl
               << left << setw(15) << idr + "," << setw(20) << id1 + "," << setw(20) << goal1 + "," << setw(20) << id2 + "," << setw(20) << goal2 + "," << setw(20) << time + "," << setw(25) << date + "," << setw(20) << address;
         }
-        // cout << endl
-        //      << left << setw(15) << idr + "," << setw(20) << id1 + "," << setw(20) << goal1 + "," << setw(20) << id2 + "," << setw(20) << goal2 + "," << setw(20) << time + "," << setw(25) << date + "," << setw(20) << address;
+        
     }
     o.close();
     file.close();
-    const char *i1("HistoryMatch.txt");
-    const char *tmp1("Tmp1.txt");
-    remove(i1);
-    rename(tmp1, "HistoryMatch.txt");
+    HistoryMatch::changeFile();
 }
 void HistoryMatch::resetGoalOfPlayerAndDeleteSavePlayer(String idRound, String idTeam1, String idTeam2)
 {
@@ -1595,9 +1594,11 @@ bool HistoryMatch::checkHistoryMatchExist(String idR, String idTeam1, String idT
         }
         if (idR == idr && ((id1 == idTeam1 && id2 == idTeam2) || id1 == idTeam2 && id2 == idTeam1))
         {
+            file.close();
             return true;
         }
     }
+    file.close();
     return false;
 }
 void HistoryMatch::showdateHM()
@@ -2124,4 +2125,57 @@ void HistoryMatch::showHMbyidround(String idvong)
         cout << "Not found!" << endl;
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     }
+}
+void HistoryMatch::changeFile() {
+    fstream file("Tmp3.txt");
+    ofstream o("HistoryMatch.txt");
+    String tmp;
+    String::getline(file, tmp);
+    o << left << setw(15) << "Vong" << setw(20) << "ID Doi thu nhat" << setw(20) << "Ban thang doi 1" << setw(20) << "ID Doi thu hai" << setw(20) << "Ban thang doi 2" << setw(20) << "Thoi gian" << setw(25) << "Ngay thang nam" << setw(20) << "Dia diem";
+    while (!file.eof())
+    {
+        String::getline(file, tmp);
+        if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+        {
+            break;
+        }
+        int check = 1;
+        bool status = false;
+        String idr, id1, goal1, id2, goal2, time, date, address;
+        for (int i = 0; i < tmp.size(); i++)
+        {
+            if (tmp[i] != ' ')
+                status = true;
+            if (tmp[i] == ',')
+            {
+                status = false;
+                check++;
+                continue;
+            }
+            if (check == 1 && status)
+                idr = idr + tmp[i];
+            else if (check == 2 && status)
+                id1 = id1 + tmp[i];
+            else if (check == 3 && status)
+                goal1 = goal1 + tmp[i];
+            else if (check == 4 && status)
+                id2 = id2 + tmp[i];
+            else if (check == 5 && status)
+                goal2 = goal2 + tmp[i];
+            else if (check == 6 && status)
+                time = time + tmp[i];
+            else if (check == 7 && status)
+                date = date + tmp[i];
+            else if (check == 8 && status && tmp[i] != '\n')
+            {
+                address = address + tmp[i];
+                if ((tmp[i + 1] == ' ' && tmp[i + 2] == ' ') || (tmp[i + 1] == ' ' && i + 1 == tmp.size() - 1))
+                    break;
+            }
+        }
+            o << endl << left << setw(15) << idr + "," << setw(20) << id1 + "," << setw(20) << goal1 + "," << setw(20) << id2 + "," << setw(20) << goal2 + "," << setw(20) << time + "," << setw(25) << date + "," << setw(20) << address;
+        
+    }
+    o.close();
+    file.close();
 }

@@ -1,3 +1,3 @@
 IDV,      ID Doi,   Ten doi,       ID CT,    Goal      
-1,        1,        Viet Nam,      1,        3         
-1,        4,        Trung Quoc,    7,        1         
+2,        3,        Lao,           6,        2         
+2,        5,        Han Quoc,      10,       3         

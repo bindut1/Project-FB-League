@@ -3,8 +3,8 @@
 using namespace std;
 #ifndef LLDB_H
 #define LLDB_H
-template <typename T>
 
+template <typename T>
 class DBLL
 {
 private:
@@ -26,6 +26,7 @@ public:
     void duyetnguoc();
     T &operator[](int);
 };
+
 template <typename T>
 DBLL<T>::DBLL()
 {

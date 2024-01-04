@@ -93,6 +93,7 @@ public:
     void showIDTeam();
     void resetInforOfTeam(String, int, int);
     void getnameteambyid();
+    bool checkTeamByName(String);
 };
 
 #endif

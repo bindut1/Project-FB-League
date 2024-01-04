@@ -5,7 +5,7 @@
 using namespace std;
 #include <algorithm>
 #include <cstring>
-
+#include <cctype>
 class String
 {
 private:
@@ -215,6 +215,12 @@ public:
             }
         }
         return tmp;
+    }
+    static bool is_digit(const String& s) {
+        for(int i=0;i<s.size();i++) {
+            if(!isdigit(s[i])) return false;
+        }
+        return true;
     }
     void toCharArray(char a[])
     {

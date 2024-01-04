@@ -183,19 +183,19 @@ void Team::showALLInforOfTeam()
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
     printCentered(drawBorder(202));
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
-    cout << "Rank: ";
+    cout << "Rank:           ";
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     cout << this->rank << endl;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
-    cout << "Point: ";
+    cout << "Point:          ";
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     cout << this->point << endl;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
-    cout << "Difference: ";
+    cout << "Difference:     ";
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     cout << this->difference << endl;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
-    cout << "NumberGoal: ";
+    cout << "NumberGoal:     ";
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     cout << this->numberGoal << endl;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
@@ -592,6 +592,7 @@ void Team::createNewFootballTeam()
          << endl;
     cout << "Enter the team name: ";
     String::getline(cin, nameFootballTeam);
+    if(nameFootballTeam.size() == 0)  return;    
     nameFootballTeam = String::standadizeString(nameFootballTeam);
     this->setNameFootballTeam(nameFootballTeam);
     int lc;
@@ -622,6 +623,8 @@ void Team::createNewFootballTeam()
         {
             system("cls");
             Coach c;
+            cout << "CREATE A NEW LEAGUE/Add a new team/Input data from the keyboard/Add coach" << endl
+            << endl;
             c.enterInforCoach();
             c.setNameFootballTeam(this->nameFootballTeam);
             ofstream o("Coach.txt", ios::app);
@@ -640,6 +643,7 @@ void Team::createNewFootballTeam()
                 // this->setIdTeam(this->getSizeTeamFromFile());
                 ofstream o("Team.txt", ios::app);
                 this->saveTeamToFile(o);
+                cout << "Successfully added a new team!" << endl;
                 break;
             }
         }
@@ -921,6 +925,7 @@ void Team::deleteTeamById()
         cout << "Team has a ID of " << ma << " not found" << endl
              << endl;
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+        return;
     }
     dkcDeleteTeamwithPlayer(thaythe);
     dkcDeleteTeamwithCoach(thaythe);
@@ -1224,6 +1229,64 @@ Team Team::getTeamByName(String name)
     tmp1.setIdTeam("0");
     return tmp1;
 }
+
+bool Team::checkTeamByName(String nameT)
+{
+    bool kt = false;
+    ifstream i("Team.txt");
+    if (i.is_open())
+    {
+        String tmp;
+        String::getline(i, tmp);
+        while (!i.eof())
+        {
+            String::getline(i, tmp);
+            int check = 1;
+            bool status = false;
+            String id, nameTeam, numMember, nameCoach, numberGoal, numberLoseGoal, difference, point, rank;
+            for (int i = 0; i < tmp.size(); i++)
+            {
+                if (tmp[i] != ' ')
+                    status = true;
+                if (tmp[i] == ',')
+                {
+                    status = false;
+                    check++;
+                    continue;
+                }
+                if (check == 1 && status)
+                    id = id + tmp[i];
+                else if (check == 2 && status)
+                    nameTeam = nameTeam + tmp[i];
+                else if (check == 3 && status)
+                    numMember = numMember + tmp[i];
+                else if (check == 4 && status)
+                    nameCoach = nameCoach + tmp[i];
+                else if (check == 5 && status)
+                    numberGoal = numberGoal + tmp[i];
+                else if (check == 6 && status)
+                    numberLoseGoal = numberLoseGoal + tmp[i];
+                else if (check == 7 && status)
+                    difference = difference + tmp[i];
+                else if (check == 8 && status)
+                    point = point + tmp[i];
+                else if (check == 9 && status && tmp[i] != '\n')
+                {
+                    rank = rank + tmp[i];
+                    if ((tmp[i + 1] == ' ' && tmp[i + 2] == ' ') || (tmp[i + 1] == ' ' && i + 1 == tmp.size() - 1))
+                        break;
+                }
+            }
+            //  cout << nameTeam << " " << tenDb << endl;
+            if (nameT == nameTeam)
+            {
+                kt = true;
+            }
+        }
+    }
+    return kt;
+}
+
 String Team::getIdByNameTeam(String name)
 {
     ifstream i("Team.txt");
@@ -1976,6 +2039,11 @@ void Team::addTeamFromFile()
     {
         cout << "Enter the file name containing the teams: ";
         cin.getline(filename, 256);
+        if(filename[0] == '\0') {
+         return;
+        }
+        
+            
         ifstream i(filename);
         if (i.is_open())
         {
@@ -2042,6 +2110,7 @@ void Team::addTeamFromFile()
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
         }
     }
+    cout << "Successfully added a new team!" << endl;
 }
 
 void Team::increaseNumberOfTeam(String tt, int ofset)

@@ -936,10 +936,13 @@ void Match::updateInforOfMatch()
     cout << endl;
     cout << "Enter the number of rounds: ";
     String::getline(cin, idRound);
+    if(idRound.size() == 0) return;
     cout << "Enter the name team 1: ";
     String::getline(cin, name1t);
+    if(name1t.size() == 0) return;
     cout << "Enter the name team 2: ";
     String::getline(cin, name2t);
+    if(name2t.size() == 0) return;
     name1 = String::standadizeString(name1t);
     name2 = String::standadizeString(name2t);
     Team t;
@@ -947,7 +950,9 @@ void Match::updateInforOfMatch()
     idTeam2 = t.getIdByNameTeam(name2);
     if (checkMatch(idRound, idTeam1, idTeam2))
     {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
         cout << "Not found" << endl;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
         cout << "Press the Enter key to continue . .";
         getchar();
         return;
@@ -1375,10 +1380,13 @@ void Match::enterResultMatch()
     cout << endl;
     cout << "Enter ID Round: ";
     String::getline(cin, idvong);
+    if(idvong.size() == 0) return;
     cout << "Enter NameTeam 1: ";
     String::getline(cin, nameTeam1t);
+    if(nameTeam1t.size() == 0) return;
     cout << "Enter NameTeam 2: ";
     String::getline(cin, nameTeam2t);
+    if(nameTeam2t.size() == 0) return;
     nameTeam1 = String::standadizeString(nameTeam1t);
     nameTeam2 = String::standadizeString(nameTeam2t);
     t1 = t1.getTeamByName(nameTeam1);
@@ -1387,7 +1395,9 @@ void Match::enterResultMatch()
     id2 = t2.getIdTeam();
     if (checkMatch(idvong, id1, id2))
     {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
         cout << "Not found!" << endl;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
         cout << "Press the Enter key to continue . .";
         getchar();
         return;
@@ -1716,8 +1726,10 @@ Match Match::getMatchFromHistoryMatch(String idRound, String idTeam1, String idT
             t2 = t2.getTeamById(idTeam2);
             Match m(t1, t2, address, time, date);
             m.setIdRound(idr);
+            file.close();
             return m;
         }
     }
+    file.close();
     return x;
 }

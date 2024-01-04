@@ -2,8 +2,8 @@
 using namespace std;
 #ifndef NODE_H
 #define NODE_H
-template <typename T>
 
+template <typename T>
 class node
 {
 public:

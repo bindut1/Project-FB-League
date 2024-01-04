@@ -1,4 +1,5 @@
 #include "Coach.h"
+#include "Team.h"
 #include <iomanip>
 #include <iostream>
 #include "../PrintCenter.h"
@@ -44,16 +45,17 @@ String Coach::getNameFootballTeam()
 
 void Coach::enterInforCoach()
 {
-    system("cls");
-    cout << "CREATE A NEW LEAGUE/Add a new team/Input data from the keyboard/Add coach" << endl
-         << endl;
+    //system("cls");
     String id, name, date, address;
     cout << "Enter citizen identification card: ";
     String::getline(cin, id);
+    if(id.size() == 0)  return;  
     cout << "Enter the name: ";
     String::getline(cin, name);
+    if(name.size() == 0)  return;  
     cout << "Enter the date (dd/mm/yyyy): ";
     String::getline(cin, date);
+    if(date.size() == 0)  return;  
     if (date[1] == '/')
     {
         String tmp("0");
@@ -63,6 +65,7 @@ void Coach::enterInforCoach()
         date.insert(3, "0");
     cout << "Enter the address: ";
     String::getline(cin, address);
+    if(address.size() == 0)  return;  
     this->setId(id);
     this->setName(String::standadizeString(name));
     this->setDateOfBirth(date);
@@ -581,10 +584,21 @@ String Coach::returnnameCoach(String nameteam)
 
 String Coach::changeCoach()
 {
-    cout << "Enter the name of the team that needs to change coach: ";
-    String nameteam;
-    String::getline(cin, nameteam);
-    nameteam = String::standadizeString(nameteam);
+    Team doi;
+        String nameteam;
+    while (true)
+    {
+        cout << "Enter the name of the team that needs to change coach: ";
+        String::getline(cin, nameteam);
+        nameteam = String::standadizeString(nameteam);
+        if(doi.checkTeamByName(nameteam) == false)
+        {
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+            cout << "Invalid nameteam!" << endl;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+        }
+        else break;
+    }
     bool kt = true;
     String ma, thaythe;
     fstream file("Coach.txt", ios::in);
@@ -651,6 +665,7 @@ String Coach::changeCoach()
         cout << "Failed";
     }
     Coach c;
+    //cout << "LEAGUE MANAGEMENT/Update information for teams, coaches, and players/Change coach information" << endl << endl;
     c.enterInforCoach();
     c.setNameFootballTeam(nameteam);
     ofstream o("Coach.txt", ios::app);
@@ -668,6 +683,9 @@ void Coach::addCoachFromFile()
         char filename[256];
         cout << "Enter the file name containing the coachs: ";
         cin.getline(filename, 256);
+        if(filename[0] == '\0') {
+         return;
+        }
         ifstream i(filename);
         if (i.is_open())
         {

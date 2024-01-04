@@ -4,6 +4,7 @@
 #include <fstream>
 #include "Algorithm.h"
 #include <iomanip>
+#include <Windows.h>
 // #include "main.cpp"
 //  #include "LapLich/Algorithm.cpp"
 using namespace std;
@@ -152,10 +153,8 @@ void Doi_Chan(int a[], int size)
             j = 1;
         for (j; j < size / 2; j++)
         {
-
             cout << left << setw(15) << String::tostring(i) + "," << setw(20) << String::tostring(a[j]) + "," << setw(20) << String::tostring(a[size - 1 - j]) + "," << d << endl;
             d.increaseTime();
-            // this_thread::sleep_for(chrono::milliseconds(100));
         }
         cout << endl;
         if (d.getHour() != 7)
@@ -236,14 +235,69 @@ void func()
     // cout << "CREATE A NEW LEAGUE/Schedule matches" << endl
     //      << endl;
     cout << "Enter the start time and location.\n";
+    do {
     cout << "Enter the day: ";
-    cin >> day;
+    String check; String::getline(cin,check);
+    if(String::is_digit(check)) {
+        day = String::toint(check);
+        if(!(day >= 1 && day <= 31)) {
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+            cout << "Invalid date. Please re-enter" << endl;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+            continue;
+        }
+        break;
+    }
+    else {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+        cout << "Invalid date. Please re-enter" << endl;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+        continue;
+    }
+    }while(true);
+
+    do {
     cout << "Enter the month: ";
-    cin >> m;
+    String check; String::getline(cin,check);
+    if(String::is_digit(check)) {
+        m = String::toint(check);
+        if(!(m >= 1 && m <= 12)) {
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+            cout << "Invalid month. Please re-enter" << endl;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+            continue;
+        }
+        break;
+    }
+    else {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+        cout << "Invalid month. Please re-enter" << endl;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+        continue;
+    }
+    }while(true);
+
+    do {
     cout << "Enter the year: ";
-    cin >> y;
+    String check; String::getline(cin,check);
+    if(String::is_digit(check)) {
+        y = String::toint(check);
+        if(!(y >= 1)) {
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+            cout << "Invalid year. Please re-enter" << endl;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+            continue;
+        }
+        break;
+    }
+    else {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+        cout << "Invalid year. Please re-enter" << endl;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+        continue;
+    }
+    }while(true);
     cout << "Enter the location: ";
-    cin.ignore();
     String diadiem;
     String::getline(cin, diadiem);
     if ((!((y % 4 == 0 && y % 100 != 0) || y % 400 == 0) && day == 29 && m == 2) || m > 12 || day > 31)

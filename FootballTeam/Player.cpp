@@ -37,10 +37,8 @@ bool Player::cmp(Player p1, Player p2)
     }
     else
     {
-        int r1 = p1.getRedCard(), r2 = p2.getRedCard();
-        if (r1 != r2)
-            return r1 < r2;
-        return p1.getYellowCard() < p2.getYellowCard();
+        int r1 = p1.getRedCard()*2 + p1.getYellowCard(), r2 = p2.getRedCard()*2 + p2.getYellowCard();
+        return r1 < r2;
     }
 }
 
@@ -225,10 +223,13 @@ void Player::enterInforPlayer()
          << endl;
     cout << "Enter citizen identification card: ";
     String::getline(cin, id);
+    if(id.size() == 0)  return;  
     cout << "Enter the name: ";
     String::getline(cin, name);
+    if(name.size() == 0)  return;  
     cout << "Enter the date (dd/mm/yyyy): ";
     String::getline(cin, date);
+    if(date.size() == 0)  return;  
     if (date[1] == '/')
     {
         String tmp("0");
@@ -238,9 +239,11 @@ void Player::enterInforPlayer()
         date.String::insert(3, "0");
     cout << "Enter the address: ";
     String::getline(cin, address);
+    if(address.size() == 0)  return;  
     cout << "Enter the number clother: ";
-    cin >> numberClothes;
-    cin.ignore();
+    String tmp; String::getline(cin,tmp);
+    if(tmp.size() == 0)  return;  
+    numberClothes = String::toint(tmp);
     // Cap nhat thong tin cau thu
     this->setId(id);
     this->setName(String::standadizeString(name));
@@ -699,6 +702,10 @@ void Player::dkcdeletePlayer(String tt)
         while (!file.eof())
         {
             String::getline(file, tmp);
+            if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                break;
+            }
             int check = 1;
             bool status = false;
             String id, nameTeam, numMember, nameCoach, numberGoal, numberLoseGoal, difference, point, rank;
@@ -843,7 +850,7 @@ void Player::deletePlayerById()
     }
 
     dkcdeletePlayer(thaythe);
-    cout << "Deleted successfully" << endl;
+    //cout << "Deleted successfully" << endl;
     cout << "Press the Enter key to continue . .";
     getchar();
 }
@@ -854,6 +861,9 @@ void Player::addPlayerFromFile()
         char filename[256];
         cout << "Enter the file name containing the players: ";
         cin.getline(filename, 256);
+        if(filename[0] == '\0') {
+         return;
+        }
         ifstream i(filename);
         if (i.is_open())
         {

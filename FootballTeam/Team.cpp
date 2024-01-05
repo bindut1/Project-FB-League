@@ -1771,14 +1771,6 @@ void Team::updateTeam()
                             tempFile1.close();
                             remove("Coach.txt");
                             rename("tempCoach.txt", "Coach.txt");
-                            Team t;
-                            t = t.getTeamById(ma);
-                            t.showALLInforOfTeam();
-                            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
-                            cout << "Successfully updated" << endl;
-                            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-                            cout << "Press the Enter key to continue . .";
-                            getchar();
                         }
                         else
                         {
@@ -1923,6 +1915,16 @@ void Team::updateTeam()
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
         cout << "The team has ID " << ma << " not found!" << endl;
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    }
+    else {
+        Team t;
+        t = t.getTeamById(ma);
+        t.showALLInforOfTeam();
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+        cout << "Successfully updated" << endl;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+        cout << "Press the Enter key to continue . .";
+        getchar();
     }
 }
 void Team::sortRankAllTeam()

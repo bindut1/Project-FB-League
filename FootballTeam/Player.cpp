@@ -8,6 +8,7 @@
 #include "../CTDL/String.h"
 #include "../CTDL/Vector.h"
 #include "../PrintCenter.h"
+#include "Team.h"
 using namespace std;
 
 Player::Player(String id, String name, String date, String address, String nameTeam, int numberClothes, int goal, int yellowCard, int redCard)
@@ -37,7 +38,9 @@ bool Player::cmp(Player p1, Player p2)
     }
     else
     {
-        int r1 = p1.getRedCard()*2 + p1.getYellowCard(), r2 = p2.getRedCard()*2 + p2.getYellowCard();
+        int r1 = p1.getRedCard() * 2 + p1.getYellowCard(), r2 = p2.getRedCard() * 2 + p2.getYellowCard();
+        if (r1 == r2)
+            return String::toint(p1.getId()) < String::toint(p2.getId());
         return r1 < r2;
     }
 }
@@ -143,6 +146,7 @@ void Player::savePlayerToFile(ofstream &o, int check)
         o << endl
           << left << setw(10) << this->id + "," << setw(25) << this->name + "," << setw(17) << this->dateOfBirth + "," << setw(15) << this->address + "," << setw(15) << myage + "," << setw(15) << myNumberClo + "," << setw(15) << myYlCard + "," << setw(15) << myRCard + "," << setw(15) << myGoal + "," << setw(15) << this->nameFootballTeam;
     }
+    o.close();
 }
 
 void Player::getAllPlayerFromFile()
@@ -155,6 +159,10 @@ void Player::getAllPlayerFromFile()
         while (!i.eof())
         {
             String::getline(i, tmp);
+            if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
             int check = 1;
             bool status = false;
             String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;
@@ -195,6 +203,63 @@ void Player::getAllPlayerFromFile()
         }
     }
 }
+Player Player::getPlayerById(String idF) {
+    ifstream i("Player.txt");
+    if (i.is_open())
+    {
+        String tmp;
+        String::getline(i, tmp);
+        while (!i.eof())
+        {
+            String::getline(i, tmp);
+            if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
+            int check = 1;
+            bool status = false;
+            String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;
+            for (int i = 0; i < tmp.size(); i++)
+            {
+                if (tmp[i] != ' ')
+                    status = true;
+                if (tmp[i] == ',')
+                {
+                    status = false;
+                    check++;
+                    continue;
+                }
+                if (check == 1 && status)
+                    id = id + tmp[i];
+                else if (check == 2 && status)
+                    name = name + tmp[i];
+                else if (check == 3 && status)
+                    date = date + tmp[i];
+                else if (check == 4 && status)
+                    address = address + tmp[i];
+                else if (check == 5 && status)
+                    age = age + tmp[i];
+                else if (check == 6 && status)
+                    numberClo = numberClo + tmp[i];
+                else if (check == 7 && status)
+                    yellowCard = yellowCard + tmp[i];
+                else if (check == 8 && status)
+                    redCard = redCard + tmp[i];
+                else if (check == 9 && status)
+                    goal = goal + tmp[i];
+                else if (check == 10 && status && tmp[i] != '\n')
+                    nameTeam = nameTeam + tmp[i];
+            }
+            if(id == idF) {
+                Player p(id, name, date, address, nameTeam, String::toint(numberClo), String::toint(goal), String::toint(yellowCard), String::toint(redCard));
+                return p;
+            }
+            // cout << id << " " << name << " " << date << " " << address << " " <<  age << " " << numberClo << " " << yellowCard << " " << redCard << " " << goal <<  " " << nameTeam << endl;
+        }
+    }
+    return Player();
+}
+
 void Player::setYellowCard(int ylcard)
 {
     this->yellowCard = ylcard;
@@ -223,13 +288,16 @@ void Player::enterInforPlayer()
          << endl;
     cout << "Enter citizen identification card: ";
     String::getline(cin, id);
-    if(id.size() == 0)  return;  
+    if (id.size() == 0)
+        return;
     cout << "Enter the name: ";
     String::getline(cin, name);
-    if(name.size() == 0)  return;  
+    if (name.size() == 0)
+        return;
     cout << "Enter the date (dd/mm/yyyy): ";
     String::getline(cin, date);
-    if(date.size() == 0)  return;  
+    if (date.size() == 0)
+        return;
     if (date[1] == '/')
     {
         String tmp("0");
@@ -239,10 +307,13 @@ void Player::enterInforPlayer()
         date.String::insert(3, "0");
     cout << "Enter the address: ";
     String::getline(cin, address);
-    if(address.size() == 0)  return;  
+    if (address.size() == 0)
+        return;
     cout << "Enter the number clother: ";
-    String tmp; String::getline(cin,tmp);
-    if(tmp.size() == 0)  return;  
+    String tmp;
+    String::getline(cin, tmp);
+    if (tmp.size() == 0)
+        return;
     numberClothes = String::toint(tmp);
     // Cap nhat thong tin cau thu
     this->setId(id);
@@ -291,7 +362,7 @@ void Player::updatePlayer()
             String::getline(file, tmp);
             if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
             {
-                break;
+                continue;
             }
             int check = 1;
             bool status = false;
@@ -478,14 +549,21 @@ void Player::updatePlayer()
     }
     else
         cout << "Failed";
+
     if (kt)
     {
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
         cout << "Players have citizen identification card of " << ma << " not found!" << endl;
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     }
-
-    // cout << "Successfully updated" << endl;
+    else {
+    Player p;
+    p = p.getPlayerById(ma);
+    p.show1();
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+    cout << "Successfully updated" << endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    }
     cout << "Press the Enter key to continue . .";
     getchar();
 }
@@ -501,6 +579,10 @@ void Player::sortAllPlayer()
         while (!i.eof())
         {
             String::getline(i, tmp);
+            if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
             int check = 1;
             bool status = false;
             String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;
@@ -567,7 +649,7 @@ void Player::updatePlayerAfterMatch(String idCheck, int ylCard, int rCard, int n
             String::getline(i, tmp);
             if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
             {
-                break;
+                continue;
             }
             int check = 1;
             bool status = false;
@@ -636,6 +718,10 @@ void Player::resetPlayer(String idCheck, int g)
         while (!i.eof())
         {
             String::getline(i, tmp);
+            if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
             int check = 1;
             bool status = false;
             String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;
@@ -704,7 +790,7 @@ void Player::dkcdeletePlayer(String tt)
             String::getline(file, tmp);
             if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
             {
-                break;
+                continue;
             }
             int check = 1;
             bool status = false;
@@ -765,6 +851,7 @@ void Player::deletePlayerById()
     bool kt = true;
     system("cls");
     String ma, thaythe;
+    String nameT;
     cout << "LEAGUE MANAGEMENT/Update information for teams, coaches, and players/Delete player information" << endl
          << endl;
     // cout << "The league includes players with the following citizen identification card:" << endl;
@@ -783,6 +870,10 @@ void Player::deletePlayerById()
         while (!file.eof())
         {
             String::getline(file, tmp);
+            if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
             int check = 1;
             bool status = false;
             String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;
@@ -825,6 +916,7 @@ void Player::deletePlayerById()
             {
                 kt = false;
                 thaythe = nameTeam;
+                nameT= nameTeam;
             }
 
             else
@@ -841,6 +933,7 @@ void Player::deletePlayerById()
     }
     else
         cout << "Failed";
+    dkcdeletePlayer(thaythe);
     if (kt)
     {
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
@@ -848,11 +941,17 @@ void Player::deletePlayerById()
              << endl;
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     }
+    else {
+        Team t;
+        t = t.getTeamByName(nameT);
+        t.showPlayerOfTeam();
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+        cout << "Deleted successfully" << endl;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+        cout << "Press the Enter key to continue . .";
+        getchar();
 
-    dkcdeletePlayer(thaythe);
-    //cout << "Deleted successfully" << endl;
-    cout << "Press the Enter key to continue . .";
-    getchar();
+    }
 }
 void Player::addPlayerFromFile()
 {
@@ -861,8 +960,9 @@ void Player::addPlayerFromFile()
         char filename[256];
         cout << "Enter the file name containing the players: ";
         cin.getline(filename, 256);
-        if(filename[0] == '\0') {
-         return;
+        if (filename[0] == '\0')
+        {
+            return;
         }
         ifstream i(filename);
         if (i.is_open())
@@ -872,6 +972,10 @@ void Player::addPlayerFromFile()
             while (!i.eof())
             {
                 String::getline(i, tmp);
+                if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+                {
+                    continue;
+                }
                 int check = 1;
                 bool status = false;
                 String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;
@@ -952,6 +1056,10 @@ void Player::showIDPlayer()
     while (!file.eof())
     {
         String::getline(file, tmp);
+        if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                break;
+            }
         int check = 1;
         bool status = false;
         String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;
@@ -1009,6 +1117,10 @@ String Player::getnamebyid(String idb)
     while (!file.eof())
     {
         String::getline(file, tmp);
+        if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
         int check = 1;
         bool status = false;
         String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;
@@ -1077,6 +1189,10 @@ void Player::showNamePlayer()
     while (!file.eof())
     {
         String::getline(file, tmp);
+        if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
         int check = 1;
         bool status = false;
         String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;
@@ -1144,6 +1260,10 @@ void Player::showPlayer()
     while (!file.eof())
     {
         String::getline(file, tmp);
+        if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
         int check = 1;
         bool status = false;
         String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;
@@ -1202,6 +1322,10 @@ int maxgoal()
         while (!i.eof())
         {
             String::getline(i, tmp);
+            if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
             int check = 1;
             bool status = false;
             String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;
@@ -1267,6 +1391,10 @@ void Player::showKing()
     while (!file.eof())
     {
         String::getline(file, tmp);
+        if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
         int check = 1;
         bool status = false;
         String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;
@@ -1336,6 +1464,10 @@ Vector<String> Player::nameKing()
     while (!file.eof())
     {
         String::getline(file, tmp);
+        if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
         int check = 1;
         bool status = false;
         String id, name, date, address, age, numberClo, yellowCard, redCard, goal, nameTeam;

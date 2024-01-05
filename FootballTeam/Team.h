@@ -35,6 +35,8 @@ public:
     void setIdTeam(String);
     void showAllMemberOfTeam();
     void showALLInforOfTeam();
+    void showCoachOfTeam();
+    void showPlayerOfTeam();
     void addPlayer(Player &);
     void addCoach(Coach &);
     void findPlayerByName();

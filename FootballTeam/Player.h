@@ -30,6 +30,7 @@ public:
     String getNameFootballTeam();
     void savePlayerToFile(ofstream &, int = 0);
     void getAllPlayerFromFile();
+    Player getPlayerById(String);
     void enterInforPlayer();
     void updatePlayer();
     static bool cmp(Player, Player);

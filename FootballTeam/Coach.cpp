@@ -45,17 +45,20 @@ String Coach::getNameFootballTeam()
 
 void Coach::enterInforCoach()
 {
-    //system("cls");
+    // system("cls");
     String id, name, date, address;
     cout << "Enter citizen identification card: ";
     String::getline(cin, id);
-    if(id.size() == 0)  return;  
+    if (id.size() == 0)
+        return;
     cout << "Enter the name: ";
     String::getline(cin, name);
-    if(name.size() == 0)  return;  
+    if (name.size() == 0)
+        return;
     cout << "Enter the date (dd/mm/yyyy): ";
     String::getline(cin, date);
-    if(date.size() == 0)  return;  
+    if (date.size() == 0)
+        return;
     if (date[1] == '/')
     {
         String tmp("0");
@@ -65,7 +68,8 @@ void Coach::enterInforCoach()
         date.insert(3, "0");
     cout << "Enter the address: ";
     String::getline(cin, address);
-    if(address.size() == 0)  return;  
+    if (address.size() == 0)
+        return;
     this->setId(id);
     this->setName(String::standadizeString(name));
     this->setDateOfBirth(date);
@@ -95,12 +99,65 @@ void Coach::saveInforIntoFile(ofstream &o)
     }
     if (o.is_open())
     {
-        o << endl 
-        << left << setw(10) << this->id + "," << setw(25) << this->name + "," << setw(17) << this->dateOfBirth + "," << setw(15) << this->address + "," << setw(15) << myage + "," << setw(15) << this->nameFootballTeam;
+        o << endl
+          << left << setw(10) << this->id + "," << setw(25) << this->name + "," << setw(17) << this->dateOfBirth + "," << setw(15) << this->address + "," << setw(15) << myage + "," << setw(15) << this->nameFootballTeam;
     }
 }
 
 Coach Coach::getCoachByNameFootballTeam(String nameFB)
+{
+    ifstream i("Coach.txt");
+    String tmp;
+    if (i.is_open())
+    {
+        String::getline(i, tmp);
+        while (!i.eof())
+        {
+            String::getline(i, tmp);
+            if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
+            int check = 1;
+            bool status = false;
+            String id, name, date, address, age, nameTeam;
+            for (int i = 0; i < tmp.size(); i++)
+            {
+                if (tmp[i] != ' ')
+                    status = true;
+                if (tmp[i] == ',')
+                {
+                    status = false;
+                    check++;
+                    continue;
+                }
+                if (check == 1 && status)
+                    id = id + tmp[i];
+                else if (check == 2 && status)
+                    name = name + tmp[i];
+                else if (check == 3 && status)
+                    date = date + tmp[i];
+                else if (check == 4 && status)
+                    address = address + tmp[i];
+                else if (check == 5 && status)
+                    age = age + tmp[i];
+                else if (check == 6 && status)
+                {
+                    nameTeam = nameTeam + tmp[i];
+                    if ((tmp[i + 1] == ' ' && tmp[i + 2] == ' ') || (tmp[i + 1] == ' ' && i + 1 == tmp.size() - 1))
+                        break;
+                }
+            }
+            if (nameFB == nameTeam)
+            {
+                Coach c(id, name, date, address, nameTeam);
+                return c;
+            }
+        }
+    }
+    return Coach();
+}
+Coach Coach::getCoachById(String idF)
 {
     ifstream i("Coach.txt");
     String tmp;
@@ -140,15 +197,15 @@ Coach Coach::getCoachByNameFootballTeam(String nameFB)
                         break;
                 }
             }
-            if (nameFB == nameTeam)
+            if (idF == id)
             {
                 Coach c(id, name, date, address, nameTeam);
+                return c;
             }
         }
     }
     return Coach();
 }
-
 void Coach::updateCoach()
 {
     bool kt = true;
@@ -175,7 +232,7 @@ void Coach::updateCoach()
             String::getline(file, tmp);
             if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
             {
-                break;
+                continue;
             }
             int check = 1;
             bool status = false;
@@ -256,6 +313,10 @@ void Coach::updateCoach()
                             while (!fileT.eof())
                             {
                                 String::getline(fileT, temp);
+                                if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+                                {
+                                    continue;
+                                }
                                 kiemtra = 1;
                                 trangthai = false;
                                 String idT, nameTeamT, numMemberT, nameCoachT, numberGoalT, numberLoseGoalT, differenceT, pointT, rankT;
@@ -402,7 +463,12 @@ void Coach::updateCoach()
         cout << "The coach has a citizen identification card " << ma << " not found" << endl;
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     }
-    // cout << "Successfully updated" << endl;
+    Coach c;
+    c = c.getCoachById(ma);
+    c.show();
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+    cout << "Successfully updated" << endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     cout << "Press the Enter key to continue . .";
     getchar();
 }
@@ -419,6 +485,10 @@ void Coach::dkcDeleteCoach(String tendoi, String newname)
         while (!file.eof())
         {
             String::getline(file, tmp);
+            if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+            {
+                continue;
+            }
             int check = 1;
             bool status = false;
             String id, nameTeam, numMember, nameCoach, numberGoal, numberLoseGoal, difference, point, rank;
@@ -481,6 +551,10 @@ String Coach::nameCoachbynameFB(String tendb)
     while (!file.eof())
     {
         String::getline(file, tmp);
+        if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+        {
+            continue;
+        }
         int check = 1;
         bool status = false;
         String id, nameTeam, numMember, nameCoach, numberGoal, numberLoseGoal, difference, point, rank;
@@ -539,7 +613,7 @@ String Coach::returnnameCoach(String nameteam)
         String::getline(file, tmp);
         if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
         {
-            break;
+            continue;
         }
         int check = 1;
         bool status = false;
@@ -584,20 +658,25 @@ String Coach::returnnameCoach(String nameteam)
 
 String Coach::changeCoach()
 {
-    Team doi;
-        String nameteam;
+    Team doi,t;
+    String nameteam;
     while (true)
     {
         cout << "Enter the name of the team that needs to change coach: ";
         String::getline(cin, nameteam);
         nameteam = String::standadizeString(nameteam);
-        if(doi.checkTeamByName(nameteam) == false)
+        if (doi.checkTeamByName(nameteam) == false)
         {
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
             cout << "Invalid nameteam!" << endl;
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
         }
-        else break;
+        else
+        {         
+            t = t.getTeamByName(nameteam);
+            t.showCoachOfTeam();
+            break;
+        }
     }
     bool kt = true;
     String ma, thaythe;
@@ -613,7 +692,7 @@ String Coach::changeCoach()
             String::getline(file, tmp);
             if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
             {
-                break;
+                continue;
             }
             int check = 1;
             bool status = false;
@@ -652,7 +731,8 @@ String Coach::changeCoach()
             }
             else
             {
-                tempFile << endl << tmp;
+                tempFile << endl
+                         << tmp;
             }
         }
         file.close();
@@ -665,13 +745,21 @@ String Coach::changeCoach()
         cout << "Failed";
     }
     Coach c;
-    //cout << "LEAGUE MANAGEMENT/Update information for teams, coaches, and players/Change coach information" << endl << endl;
+    // cout << "LEAGUE MANAGEMENT/Update information for teams, coaches, and players/Change coach information" << endl << endl;
     c.enterInforCoach();
     c.setNameFootballTeam(nameteam);
     ofstream o("Coach.txt", ios::app);
     c.saveInforIntoFile(o);
+    o.close();
+    t = t.getTeamByName(nameteam);
+    t.showCoachOfTeam();
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+    cout << "Successfully updated" << endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    cout << "Press the Enter key to continue . .";
+    getchar();
     return nameteam;
-    //dkcDeleteCoach(nameteam, returnnameCoach(nameteam));
+    // dkcDeleteCoach(nameteam, returnnameCoach(nameteam));
 }
 
 void Coach::addCoachFromFile()
@@ -683,8 +771,9 @@ void Coach::addCoachFromFile()
         char filename[256];
         cout << "Enter the file name containing the coachs: ";
         cin.getline(filename, 256);
-        if(filename[0] == '\0') {
-         return;
+        if (filename[0] == '\0')
+        {
+            return;
         }
         ifstream i(filename);
         if (i.is_open())
@@ -694,6 +783,10 @@ void Coach::addCoachFromFile()
             while (!i.eof())
             {
                 String::getline(i, tmp);
+                if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+                {
+                    continue;
+                }
                 int check = 1;
                 bool status = false;
                 String id, name, date, address, age, nameTeam;
@@ -760,6 +853,10 @@ void Coach::showIDCoach()
     while (!file.eof())
     {
         String::getline(file, tmp);
+        if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+        {
+            continue;
+        }
         int check = 1;
         bool status = false;
         String id, name, date, address, age, nameTeam;
@@ -819,6 +916,10 @@ void Coach::showNameCoach()
     while (!file.eof())
     {
         String::getline(file, tmp);
+        if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+        {
+            continue;
+        }
         int check = 1;
         bool status = false;
         String id, name, date, address, age, nameTeam;
@@ -878,6 +979,10 @@ void Coach::showCoach()
     while (!file.eof())
     {
         String::getline(file, tmp);
+        if (tmp[0] == ' ' || tmp.size() <= 1 || tmp[0] == '\n')
+        {
+            continue;
+        }
         int check = 1;
         bool status = false;
         String id, name, date, address, age, nameTeam;

@@ -29,6 +29,7 @@ bool Team::cmp(Team t1, Team t2)
     {
         return p1 > p2;
     }
+    if(t1.getDifference() == t2.getDifference())  return String::toint(t1.getIdTeam()) < String::toint(t2.getIdTeam());;
     return t1.getDifference() > t2.getDifference();
 }
 void Team::setGoal(int goal)
@@ -205,6 +206,40 @@ void Team::showALLInforOfTeam()
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
     printCentered(drawBorder(202));
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+}
+void Team::showPlayerOfTeam() {
+     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
+    cout << "The team name: ";
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    cout << this->nameFootballTeam << endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
+    printCentered(drawBorder(202));
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
+    cout << "Information of players:" << endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    String id = "ID", tenct = "The name Player", date = "Date", add = "Address", age = "Age", numberclo = "NumberClother", yl = "YellowCard", r = "RedCard", goal = "Goal", namefb = "The name football";
+    int console = 120;
+    int colum = (console - id.size() - tenct.size() - date.size() - add.size() - age.size() - numberclo.size() - yl.size() - r.size() - goal.size() - namefb.size()) / 2;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
+    cout << setw(colum - 4) << id << setw(colum) << tenct << setw(colum) << date << setw(colum) << add << setw(colum) << age << setw(colum) << numberclo << setw(colum) << yl << setw(colum) << r << setw(colum) << goal << setw(colum) << namefb << endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    this->listMember.duyetxuoi();
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
+    printCentered(drawBorder(202));
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
+    cout << endl;
+}
+void Team::showCoachOfTeam() {
+    cout << endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
+    cout << "The team name: ";
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    cout << this->nameFootballTeam << endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5);
+    cout << "Information of coach:" << endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    this->coach.show();
+    cout << endl;
 }
 // void Team::showHistoryMatch() {
 //     this->supportTeam.duyetxuoi(this->head);
@@ -1736,6 +1771,14 @@ void Team::updateTeam()
                             tempFile1.close();
                             remove("Coach.txt");
                             rename("tempCoach.txt", "Coach.txt");
+                            Team t;
+                            t = t.getTeamById(ma);
+                            t.showALLInforOfTeam();
+                            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+                            cout << "Successfully updated" << endl;
+                            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+                            cout << "Press the Enter key to continue . .";
+                            getchar();
                         }
                         else
                         {
@@ -2192,6 +2235,7 @@ void Team::addPlayerToTeam()
     cout << endl;
     cout << "Enter the ID: ";
     String::getline(cin, idTeam);
+    Team tmp;
     Player p;
     p.enterInforPlayer();
     Team t;
@@ -2200,7 +2244,12 @@ void Team::addPlayerToTeam()
     t.increaseNumberOfTeam(idTeam);
     ofstream o("Player.txt", ios::app);
     p.savePlayerToFile(o);
+    o.close();
+    tmp = tmp.getTeamById(idTeam);
+    tmp.showAllMemberOfTeam();
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
     cout << "Add successful players!" << endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     cout << "Press the Enter key to continue . .";
     getchar();
 }

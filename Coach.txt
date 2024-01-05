@@ -2,4 +2,4 @@ ID        Ten HLV                  Ngay sinh        Dia chi        Tuoi         
 1,        Truong Quang Nghia,      24/01/2004,      Que Son,       19,            Viet Nam       
 4,        Tran Ngoc Trung,         01/03/2005,      Dong Phu,      18,            Trung Quoc     
 5,        Nguyen Quoc Hoang,       02/03/2001,      Phu Ninh,      22,            Nga            
-6,        Tran Vu Lam,             12/02/2004,      Que Son,       19,            Lao            
+33,       Dang Quan Vu,            01/01/2003,      Phu Ninh,      21,            Lao2           

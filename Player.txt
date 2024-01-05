@@ -1,21 +1,20 @@
 ID        Ten cau thu              Ngay sinh        Dia chi        Tuoi           So ao          The vang       The do         Ban thang      Ten doi bong   
 22,       Nguyen Minh Tan,         01/02/2004,      Hue,           19,            22,            0,             0,             2,             Nga            
-2,        Nguyen Chung,            02/03/2004,      Hoa Cam,       19,            2,             0,             0,             2,             Viet Nam       
-12,       Mai Van Khanh,           04/12/2004,      Hue,           19,            12,            1,             0,             1,             Lao            
-24,       Tran Nhu Thuan,          02/03/2004,      Quang Tri,     19,            24,            0,             0,             0,             Nga            
-23,       Vo Nhat Thanh,           12/12/2004,      Quang Binh,    19,            23,            0,             0,             0,             Nga            
-21,       Nguyen Thanh Tai,        02/04/2004,      Dai Loc,       19,            21,            0,             0,             0,             Nga            
-20,       Nguyen Huu Phuc,         03/02/2005,      Nguyen Chanh,  18,            20,            0,             0,             0,             Trung Quoc     
-19,       Tran Van Nhat,           11/11/2004,      Hue,           19,            19,            0,             0,             0,             Trung Quoc     
-18,       Nguyen Quynh Nha,        05/07/2004,      Hue,           19,            18,            0,             0,             0,             Trung Quoc     
-17,       Le Anh Ngu,              03/04/2004,      Nui Thanh,     19,            17,            0,             0,             0,             Trung Quoc     
-16,       Cao Vu Thu Nga,          01/01/2004,      Dien Ban,      20,            16,            0,             0,             0,             Trung Quoc     
-15,       Le Vo Nhat Minh,         01/12/2004,      Hue,           19,            15,            0,             0,             0,             Lao            
-14,       Dang Phuc Long,          01/02/2004,      Hue,           19,            14,            0,             0,             0,             Lao            
-13,       Tran Vu Lam,             26/12/2004,      Que Chau,      19,            13,            0,             0,             0,             Lao            
-11,       Nguyen Anh Khoa,         02/03/2004,      Hue,           19,            11,            0,             0,             0,             Lao            
-5,        Nguyen Van Dung,         01/01/2001,      Hue,           23,            5,             0,             0,             0,             Viet Nam       
-4,        Vo Van Duc,              01/06/2005,      Quang Binh,    18,            4,             0,             0,             0,             Viet Nam       
-3,        Ngo Van Danh,            03/04/2004,      Phu Ninh,      19,            3,             0,             0,             0,             Viet Nam       
+11,       Nguyen Anh Khoa,         02/03/2004,      Hue,           19,            11,            0,             0,             1,             Lao2           
+15,       Le Vo Nhat Minh,         01/12/2004,      Hue,           19,            15,            0,             0,             1,             Lao2           
+20,       Nguyen Huu Phuc,         03/02/2005,      Nguyen Chanh,  18,            20,            0,             0,             1,             Trung Quoc     
 1,        Truong Cong Bao,         12/02/2004,      Hue,           19,            1,             0,             0,             0,             Viet Nam       
+3,        Ngo Van Danh,            03/04/2004,      Phu Ninh,      19,            3,             0,             0,             0,             Viet Nam       
+4,        Vo Van Duc,              01/06/2005,      Quang Binh,    18,            4,             0,             0,             0,             Viet Nam       
+5,        Nguyen Van Dung,         01/01/2001,      Hue,           23,            5,             0,             0,             0,             Viet Nam       
+13,       Tran Vu Lam,             26/12/2004,      Que Chau,      19,            13,            0,             0,             0,             Lao2           
+14,       Dang Phuc Long,          01/02/2004,      Hue,           19,            14,            0,             0,             0,             Lao2           
+16,       Cao Vu Thu Nga,          01/01/2004,      Dien Ban,      20,            16,            0,             0,             0,             Trung Quoc     
+17,       Le Anh Ngu,              03/04/2004,      Nui Thanh,     19,            17,            0,             0,             0,             Trung Quoc     
+18,       Nguyen Quynh Nha,        05/07/2004,      Hue,           19,            18,            0,             0,             0,             Trung Quoc     
+19,       Tran Van Nhat,           11/11/2004,      Hue,           19,            19,            0,             0,             0,             Trung Quoc     
+21,       Nguyen Thanh Tai,        02/04/2004,      Dai Loc,       19,            21,            0,             0,             0,             Nga            
+23,       Vo Nhat Thanh,           12/12/2004,      Quang Binh,    19,            23,            0,             0,             0,             Nga            
+24,       Tran Nhu Thuan,          02/03/2004,      Quang Tri,     19,            24,            0,             0,             0,             Nga            
 25,       Hoang Trung,             02/05/2004,      Hue,           19,            25,            1,             0,             0,             Nga            
+30,       Nguyen Van Dat,          01/01/2000,      Quan Lien Chieu,24,            10,            0,             0,             0,             Lao2           

@@ -12,8 +12,10 @@ using namespace std;
 
 int main()
 {
-   HistoryMatch m;
-   m.updateHistoryMatch1();
+   for(int i=1;i<=15;i++) {
+      SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), i);
+      cout << i << endl;
+   }
    
 
 }

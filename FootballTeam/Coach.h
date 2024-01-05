@@ -17,6 +17,7 @@ public:
     void enterInforCoach();
     void saveInforIntoFile(ofstream &);
     Coach getCoachByNameFootballTeam(String);
+    Coach getCoachById(String);
     void updateCoach();
     void deleteCoachById();
     void dkcDeleteCoach(String, String);
